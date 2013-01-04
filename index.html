@@ -1,0 +1,42 @@
+<html>
+<head>
+
+  <script type="text/javascript" src="lib/ace/ace.js"></script>
+  <script type="text/javascript" src="lib/knockout-2.2.0.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+  <script type="text/javascript" src="knockout-ace.js"></script>
+
+  <style type="text/css">
+    .editor {
+      height: 250px;
+      width: 500px;
+    }
+    .editor-container{
+      height: 250px;
+    }
+  </style>
+
+</head>
+<body>
+
+<div class="editor-container">
+  <div class="editor" data-bind="ace: markup1, aceOptions: { mode: 'javascript', theme: 'solarized_light' }"></div>
+</div>
+<div class="editor-container">
+  <div class="editor" data-bind="ace: markup2"></div>
+</div>
+
+<textarea data-bind="value: markup1"></textarea>
+<textarea data-bind="value: markup2"></textarea>
+
+  <script>
+    var viewModel = {
+      markup1: ko.observable("foo = function(){ return 'love'; };"),
+      markup2: ko.observable("two"),
+    };
+    ko.applyBindings(viewModel)
+  </script>
+
+
+</body>
