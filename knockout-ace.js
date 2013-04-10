@@ -2,18 +2,16 @@
 // https://github.com/SteveSanderson/knockout/wiki/Bindings---tinyMCE
 // Initial version by Ryan Niemeyer. Updated by Scott Messinger, Frederik Raabye, Thomas Hallock and Drew Freyling.
 
-(function($) {
+(function() {
   var instances_by_id = {} // needed for referencing instances during updates.
   , init_id = 0;           // generated id increment storage
 
   ko.bindingHandlers.ace = {
     init: function (element, valueAccessor, allBindingsAccessor, context) {
 
-      var init_arguments = arguments;
       var options = allBindingsAccessor().aceOptions || {};
       var modelValue = valueAccessor();
       var value = ko.utils.unwrapObservable(valueAccessor());
-      var el = $(element);
 
       // Ace attaches to the element by DOM id, so we need to make one for the element if it doesn't have one already.
       if (!element.id) {
@@ -37,11 +35,16 @@
       });
 
       instances_by_id[element.id] = editor;
+
+      // destroy the editor instance when the element is removed
+      ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+        editor.destroy();
+        delete instances_by_id[element.id];
+      });
     },
     update: function (element, valueAccessor, allBindingsAccessor, context) {
-      var el = $(element);
       var value = ko.utils.unwrapObservable(valueAccessor());
-      var id = el.attr('id');
+      var id = element.id;
 
       //handle programmatic updates to the observable
       // also makes sure it doesn't update it if it's the same.
@@ -56,4 +59,4 @@
       }
     }
   };
-}(jQuery));
+}());
