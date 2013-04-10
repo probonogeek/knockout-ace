@@ -35,6 +35,12 @@
       });
 
       instances_by_id[element.id] = editor;
+
+      // destroy the editor instance when the element is removed
+      ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+        editor.destroy();
+        delete instances_by_id[element.id];
+      });
     },
     update: function (element, valueAccessor, allBindingsAccessor, context) {
       var value = ko.utils.unwrapObservable(valueAccessor());
