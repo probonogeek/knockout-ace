@@ -9,7 +9,6 @@
   ko.bindingHandlers.ace = {
     init: function (element, valueAccessor, allBindingsAccessor, context) {
 
-      var init_arguments = arguments;
       var options = allBindingsAccessor().aceOptions || {};
       var modelValue = valueAccessor();
       var value = ko.utils.unwrapObservable(valueAccessor());
