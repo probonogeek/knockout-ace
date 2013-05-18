@@ -58,4 +58,17 @@
       }
     }
   };
+  
+  ko.aceEditors = {
+    resizeAll: function(){
+      for (var id in instances_by_id) {
+        if (!instances_by_id.hasOwnProperty(id)) continue;
+        var editor = instances_by_id[id];
+        editor.resize();
+      }
+    },
+    get: function(id){
+      return instances_by_id[id];
+    }
+  };
 }());
