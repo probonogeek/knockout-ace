@@ -1,16 +1,15 @@
 // Based on Knockout Bindings for TinyMCE
 // https://github.com/SteveSanderson/knockout/wiki/Bindings---tinyMCE
-// Initial version by Ryan Niemeyer. Updated by Scott Messinger, Frederik Raabye, Thomas Hallock and Drew Freyling.
+// Initial version by Ryan Niemeyer. Updated by Scott Messinger, Frederik Raabye, Thomas Hallock, Drew Freyling, and Shane Carr.
 
 (function() {
   var instances_by_id = {} // needed for referencing instances during updates.
   , init_id = 0;           // generated id increment storage
 
   ko.bindingHandlers.ace = {
-    init: function (element, valueAccessor, allBindingsAccessor, context) {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
 
       var options = allBindingsAccessor().aceOptions || {};
-      var modelValue = valueAccessor();
       var value = ko.utils.unwrapObservable(valueAccessor());
 
       // Ace attaches to the element by DOM id, so we need to make one for the element if it doesn't have one already.
@@ -29,8 +28,8 @@
       editor.gotoLine( 0 );
 
       editor.getSession().on("change",function(delta){
-        if (ko.isWriteableObservable(modelValue)) {
-          modelValue( editor.getValue() );
+        if (ko.isWriteableObservable(valueAccessor())) {
+          valueAccessor()( editor.getValue() );
         }
       });
 
@@ -42,7 +41,7 @@
         delete instances_by_id[element.id];
       });
     },
-    update: function (element, valueAccessor, allBindingsAccessor, context) {
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
       var value = ko.utils.unwrapObservable(valueAccessor());
       var id = element.id;
 
@@ -57,6 +56,19 @@
           editor.gotoLine( 0 );
         }
       }
+    }
+  };
+  
+  ko.aceEditors = {
+    resizeAll: function(){
+      for (var id in instances_by_id) {
+        if (!instances_by_id.hasOwnProperty(id)) continue;
+        var editor = instances_by_id[id];
+        editor.resize();
+      }
+    },
+    get: function(id){
+      return instances_by_id[id];
     }
   };
 }());
