@@ -6,6 +6,25 @@
   var instances_by_id = {} // needed for referencing instances during updates.
   , init_id = 0;           // generated id increment storage
 
+  var getMode = function(viewModel, aceOptions){
+    var result = {};
+    if (viewModel.mode) {
+      result.observable = ko.isObservable(viewModel.mode)
+        ? viewModel.mode
+        : null;
+
+      result.value = viewModel.mode() ? viewModel.mode() : viewModel.mode;
+    }
+    else {
+      result.value = aceOptions.mode;
+    }
+    return result;
+  };
+
+  var setMode = function(editor, mode){
+    if(mode) editor.getSession().setMode("ace/mode/" + mode);
+  };
+
   ko.bindingHandlers.ace = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
 
@@ -21,8 +40,18 @@
       var editor = ace.edit( element.id );
 
       if ( options.theme ) editor.setTheme("ace/theme/" + options.theme);
-      if ( options.mode ) editor.getSession().setMode("ace/mode/" + options.mode);
       if ( options.readOnly ) editor.setReadOnly(true);
+
+      var mode = getMode(viewModel, options);
+      if(mode){
+        setMode(editor, mode.value);
+        
+        if(mode.observable) {
+          mode.observable.subscribe(function(newValue){
+            setMode(editor, newValue);
+          });
+        }
+      }
 
       editor.setValue(value);
       editor.gotoLine( 0 );

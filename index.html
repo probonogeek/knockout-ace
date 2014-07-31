@@ -21,7 +21,7 @@
 <body>
 
 <div class="editor-container">
-  <div class="editor" data-bind="ace: markup1, aceOptions: { mode: 'javascript', theme: 'solarized_light' }"></div>
+  <div class="editor" data-bind="ace: markup1, aceOptions: { theme: 'solarized_light' }"></div>
 </div>
 <div class="editor-container">
   <div class="editor" data-bind="ace: markup2"></div>
@@ -30,8 +30,14 @@
 <textarea data-bind="value: markup1"></textarea>
 <textarea data-bind="value: markup2"></textarea>
 
+<br>
+
+<input type="radio" name="mode" value="javascript" data-bind="checked: mode">Mode: JavaScript<br>
+<input type="radio" name="mode" value="xml" data-bind="checked: mode">Mode: XML<br>
+
   <script>
     var viewModel = {
+      mode: ko.observable('javascript'),
       markup1: ko.observable("foo = function(){ return 'love'; };"),
       markup2: ko.observable("two"),
     };
