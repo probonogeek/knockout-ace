@@ -1,0 +1,26 @@
+{
+  "name": "knockout-ace",
+  "main": "knockout-ace.js",
+  "version": "1.0.0",
+  "authors": [
+    "Sean Kellogg <skellogg@trilogyinteractive.com>",
+    "Shane Carr <shane.carr@wustl.edu>"
+  ],
+  "description": "Knockout bindings for the Ace editor",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "knockout",
+    "ace"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/probonogeek/knockout-ace",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
