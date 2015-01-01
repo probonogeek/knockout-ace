@@ -2,8 +2,18 @@
 // https://github.com/SteveSanderson/knockout/wiki/Bindings---tinyMCE
 // Initial version by Ryan Niemeyer. Updated by Scott Messinger, Frederik Raabye, Thomas Hallock, Drew Freyling, and Shane Carr.
 
-// AMD Declaration
-define("knockout-ace", ["knockout", "ace/ace"], function(ko, ace){
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD
+    define(['knockout-ace'], ['knockout', 'ace/ace'], factory);
+  } else if (typeof exports === 'object') {
+    // CommonJS
+    factory(require('jquery'));
+  } else {
+    // Browser globals
+    factory(ko, ace);
+  }
+}(function(ko, ace){
   var instances_by_id = {} // needed for referencing instances during updates.
   , init_id = 0;           // generated id increment storage
 
@@ -72,4 +82,4 @@ define("knockout-ace", ["knockout", "ace/ace"], function(ko, ace){
       return instances_by_id[id];
     }
   };
-});
+}));
