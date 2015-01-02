@@ -5,10 +5,7 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD
-    define(['knockout-ace'], ['knockout', 'ace/ace'], factory);
-  } else if (typeof exports === 'object') {
-    // CommonJS
-    factory(require('jquery'));
+    define('knockout-ace', ['knockout', 'ace/ace'], factory);
   } else {
     // Browser globals
     factory(ko, ace);
