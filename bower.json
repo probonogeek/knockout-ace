@@ -1,7 +1,7 @@
 {
   "name": "knockout-ace",
   "main": "knockout-ace.js",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "authors": [
     "Sean Kellogg <skellogg@trilogyinteractive.com>",
     "Shane Carr <shane.carr@wustl.edu>"
